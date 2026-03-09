@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wikki Tourist Foundation | Wikki Tourist FC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #8B0000;
+    --red-light: #c0392b;
+    --red-glow: rgba(139, 0, 0, 0.2);
+    --gold: #C9A84C;
+    --rose: #fca5a5;
+    --white: #ffffff;
+    --dark: #050505;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    background: rgba(5,5,5,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(252,165,165,0.12);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+  .nav-logo-badge {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, #8B0000, #4a0000);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .nav-logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 2px; }
+  .nav-logo-sub { font-size: 0.55rem; letter-spacing: 3px; color: var(--rose); text-transform: uppercase; }
+
+  .nav-back {
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none; color: rgba(255,255,255,0.6);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 7px 16px; border-radius: 2px; transition: all 0.3s;
+  }
+  .nav-back:hover { color: var(--rose); border-color: rgba(252,165,165,0.4); }
+
+  /* ── HERO ── */
+  .page-hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex; align-items: center;
+    overflow: hidden;
+    padding-top: 68px;
+  }
+
+  .hero-bg-foundation {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 70% at 30% 60%, rgba(139,0,0,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 30%, rgba(201,168,76,0.07) 0%, transparent 50%),
+      linear-gradient(160deg, #08020202 0%, #100505 40%, #060202 100%);
+  }
+
+  .hero-geo {
+    position: absolute; inset: 0; z-index: 0;
+    overflow: hidden;
+  }
+
+  .geo-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(252,165,165,0.06);
+  }
+  .geo-circle-1 { width: 600px; height: 600px; top: -200px; right: -100px; }
+  .geo-circle-2 { width: 900px; height: 900px; top: -350px; right: -300px; }
+  .geo-line {
+    position: absolute;
+    background: rgba(252,165,165,0.04);
+  }
+
+  .hero-content-foundation {
+    position: relative; z-index: 2;
+    padding: 0 6%;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: rgba(252,165,165,0.08);
+    border: 1px solid rgba(252,165,165,0.28);
+    border-radius: 2px;
+    padding: 6px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 24px;
+  }
+
+  .hero-eyebrow-heart {
+    animation: heartbeat 1.5s infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    14% { transform: scale(1.2); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.15); }
+    56% { transform: scale(1); }
+  }
+
+  .hero-title-found {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    line-height: 0.9;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+  }
+
+  .hero-title-found em {
+    font-style: normal;
+    color: var(--rose);
+    display: block;
+  }
+
+  .hero-title-found .gold { color: var(--gold); }
+
+  .hero-subtitle-found {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.95rem; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-bottom: 28px;
+  }
+
+  .hero-desc-found {
+    font-size: 1.05rem; line-height: 1.85;
+    color: rgba(255,255,255,0.68);
+    max-width: 460px; margin-bottom: 40px;
+  }
+
+  .hero-cta-group { display: flex; gap: 14px; flex-wrap: wrap; }
+
+  .btn-found-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--rose); color: #1a0000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 0.85rem; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 28px; border-radius: 2px;
+    transition: all 0.3s; border: none; cursor: pointer;
+  }
+  .btn-found-primary:hover { background: #f87171; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(252,165,165,0.3); }
+
+  .btn-found-outline {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: transparent; color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 0.85rem; letter-spacing: 2px;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 28px; border-radius: 2px;
+    border: 1px solid rgba(255,255,255,0.22);
+    transition: all 0.3s; cursor: pointer;
+  }
+  .btn-found-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.5); }
+
+  /* Impact visual */
+  .impact-visual {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+
+  .impact-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(252,165,165,0.12);
+    border-radius: 4px;
+    padding: 20px 24px;
+    display: flex; align-items: center; gap: 18px;
+    transition: all 0.3s;
+  }
+  .impact-card:hover { background: rgba(252,165,165,0.05); border-color: rgba(252,165,165,0.25); transform: translateX(4px); }
+
+  .impact-card-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .impact-card-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; color: var(--rose); line-height: 1;
+  }
+  .impact-card-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); letter-spacing: 1px; }
+  .impact-card-desc { font-size: 0.82rem; color: rgba(255,255,255,0.65); line-height: 1.5; margin-top: 4px; }
+
+  /* ── CAUSES ── */
+  .section { padding: 100px 6%; }
+  .section-dark { background: #020202; }
+
+  .section-center { text-align: center; max-width: 600px; margin: 0 auto 64px; }
+  .section-tag-found {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.62rem; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 12px;
+  }
+  .section-title-found {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4rem); letter-spacing: 2px;
+    margin-bottom: 16px; line-height: 1;
+  }
+  .section-desc { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.55); }
+
+  .causes-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .cause-card {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 4px;
+    padding: 40px 32px;
+    background: rgba(255,255,255,0.02);
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+  .cause-card:hover { border-color: rgba(252,165,165,0.25); background: rgba(252,165,165,0.03); transform: translateY(-4px); }
+
+  .cause-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--rose), var(--gold));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .cause-card:hover::before { opacity: 1; }
+
+  .cause-icon { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+  .cause-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem; letter-spacing: 2px; margin-bottom: 12px;
+  }
+  .cause-desc { font-size: 0.9rem; line-height: 1.75; color: rgba(255,255,255,0.58); margin-bottom: 20px; }
+  .cause-progress-label { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.72rem; color: rgba(255,255,255,0.45); letter-spacing: 1px; }
+  .cause-progress-bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; overflow: hidden; }
+  .cause-progress-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--red-light), var(--rose)); transition: width 1.5s ease; }
+
+  /* ── DONATION ── */
+  .donate-section {
+    background: linear-gradient(160deg, #080202 0%, #100505 60%, #060202 100%);
+    padding: 100px 6%;
+    position: relative; overflow: hidden;
+  }
+
+  .donate-section::before {
+    content: '❤️';
+    position: absolute; font-size: 32vw; opacity: 0.02;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .donate-inner {
+    position: relative; z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .donate-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4.2rem);
+    letter-spacing: 2px; line-height: 1; margin-bottom: 20px;
+  }
+  .donate-left p { font-size: 0.95rem; line-height: 1.8; color: rgba(255,255,255,0.6); margin-bottom: 32px; }
+
+  .what-gives { margin-top: 16px; }
+  .what-gives-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-bottom: 20px;
+  }
+  .what-gives-icon {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: rgba(252,165,165,0.1); border: 1px solid rgba(252,165,165,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .what-gives-text strong {
+    display: block; font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.88rem; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 4px; font-weight: 700;
+  }
+  .what-gives-text span { font-size: 0.82rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+  /* DONATE FORM */
+  .donate-form-wrap {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(252,165,165,0.15);
+    border-radius: 8px;
+    padding: 40px 32px;
+  }
+
+  .donate-form-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 6px;
+  }
+  .donate-form-sub { font-size: 0.8rem; color: rgba(255,255,255,0.4); letter-spacing: 1px; margin-bottom: 28px; }
+
+  /* Amount picker */
+  .amount-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .amount-btn {
+    padding: 13px 8px; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px; color: white; cursor: pointer;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 1px;
+    transition: all 0.25s; text-align: center;
+  }
+  .amount-btn:hover { border-color: rgba(252,165,165,0.4); background: rgba(252,165,165,0.06); }
+  .amount-btn.active { border-color: var(--rose); background: rgba(252,165,165,0.12); color: var(--rose); }
+  .amount-btn sub { font-size: 0.6rem; font-weight: 400; }
+
+  .form-label {
+    display: block; margin-bottom: 8px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .form-input {
+    width: 100%; padding: 13px 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px; color: white;
+    font-family: 'Barlow', sans-serif; font-size: 0.9rem;
+    transition: all 0.3s; outline: none; margin-bottom: 14px;
+  }
+  .form-input:focus { border-color: rgba(252,165,165,0.5); background: rgba(252,165,165,0.04); }
+  .form-input::placeholder { color: rgba(255,255,255,0.2); }
+
+  .amount-custom-wrap { position: relative; margin-bottom: 20px; }
+  .amount-currency {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    color: rgba(255,255,255,0.4); font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem; pointer-events: none;
+  }
+  .amount-custom-input {
+    width: 100%; padding: 13px 16px 13px 32px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px; color: white;
+    font-family: 'Barlow', sans-serif; font-size: 0.9rem;
+    transition: all 0.3s; outline: none;
+  }
+  .amount-custom-input:focus { border-color: rgba(252,165,165,0.5); }
+  .amount-custom-input::placeholder { color: rgba(255,255,255,0.2); }
+
+  .freq-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .freq-tab {
+    flex: 1; padding: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 2px; color: rgba(255,255,255,0.6);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s; text-align: center; font-weight: 600;
+  }
+  .freq-tab.active { border-color: rgba(252,165,165,0.5); background: rgba(252,165,165,0.08); color: var(--rose); }
+
+  .donate-submit {
+    width: 100%; padding: 16px;
+    background: linear-gradient(135deg, var(--red-light), var(--red));
+    color: white;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800; font-size: 1rem; letter-spacing: 3px;
+    text-transform: uppercase; border: none; border-radius: 2px;
+    cursor: pointer; transition: all 0.3s; margin-top: 4px;
+  }
+  .donate-submit:hover { background: linear-gradient(135deg, #e53e3e, #c0392b); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,0,0,0.4); }
+
+  .donate-trust {
+    display: flex; align-items: center; justify-content: center;
+    gap: 8px; margin-top: 14px;
+    font-size: 0.72rem; color: rgba(255,255,255,0.3);
+  }
+
+  /* ── SUCCESS ── */
+  .donate-success {
+    display: none;
+    text-align: center;
+    padding: 48px 32px;
+    background: rgba(252,165,165,0.06);
+    border: 1px solid rgba(252,165,165,0.2);
+    border-radius: 8px;
+  }
+  .donate-success.show { display: block; }
+  .success-icon { font-size: 3rem; margin-bottom: 16px; }
+  .success-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--rose); margin-bottom: 8px; }
+  .success-msg { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.7; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials-section { padding: 100px 6%; background: #020202; }
+
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  }
+
+  .testimonial-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 4px; padding: 28px;
+    transition: all 0.3s;
+  }
+  .testimonial-card:hover { border-color: rgba(252,165,165,0.2); transform: translateY(-2px); }
+
+  .testimonial-quote { font-size: 2rem; color: var(--rose); opacity: 0.4; line-height: 1; margin-bottom: 12px; }
+  .testimonial-text { font-size: 0.88rem; line-height: 1.75; color: rgba(255,255,255,0.65); margin-bottom: 20px; font-style: italic; }
+  .testimonial-author {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .testimonial-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--red), #4a0000);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; flex-shrink: 0;
+  }
+  .testimonial-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.88rem; letter-spacing: 1px; }
+  .testimonial-loc { font-size: 0.72rem; color: rgba(255,255,255,0.4); }
+
+  /* ── FOOTER ── */
+  .page-footer {
+    background: #020202;
+    border-top: 1px solid rgba(252,165,165,0.1);
+    padding: 32px 6%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 2px; color: var(--rose); }
+  .footer-copy-found { font-size: 0.75rem; color: rgba(255,255,255,0.3); }
+  .footer-back { text-decoration: none; color: rgba(255,255,255,0.4); font-size: 0.78rem; transition: color 0.3s; }
+  .footer-back:hover { color: var(--rose); }
+
+  @media (max-width: 768px) {
+    .hero-content-foundation { grid-template-columns: 1fr; gap: 40px; }
+    .impact-visual { display: none; }
+    .causes-grid { grid-template-columns: 1fr; }
+    .donate-inner { grid-template-columns: 1fr; gap: 40px; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .amount-grid { grid-template-columns: repeat(2, 1fr); }
+    .section { padding: 60px 4%; }
+    .donate-section { padding: 60px 4%; }
+    .testimonials-section { padding: 60px 4%; }
+  }
+  @media (max-width: 480px) {
+    .page-footer { flex-direction: column; text-align: center; }
+    .hero-title-found { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <div class="nav-logo-badge">❤️</div>
+    <div>
+      <div class="nav-logo-text">Wikki Foundation</div>
+      <div class="nav-logo-sub">Making A Difference</div>
+    </div>
+  </a>
+  <a class="nav-back" href="index.html">← Back to Main Site</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="hero-bg-foundation"></div>
+  <div class="hero-geo">
+    <div class="geo-circle geo-circle-1"></div>
+    <div class="geo-circle geo-circle-2"></div>
+  </div>
+
+  <div class="hero-content-foundation">
+    <div>
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-heart">❤️</span>
+        Wikki Tourist Foundation · Bauchi, Nigeria
+      </div>
+      <h1 class="hero-title-found">
+        BEYOND<br>
+        <em>THE PITCH</em><br>
+        <span class="gold">WE GIVE.</span>
+      </h1>
+      <p class="hero-subtitle-found">Serving Communities · Building Futures</p>
+      <p class="hero-desc-found">
+        The Wikki Tourist Foundation is the charitable arm of Wikki Tourist FC,
+        dedicated to uplifting lives across Bauchi State through education,
+        youth empowerment, healthcare and grassroots football development.
+      </p>
+      <div class="hero-cta-group">
+        <a href="#donate" class="btn-found-primary">❤️ Donate Now</a>
+        <a href="#causes" class="btn-found-outline">Our Causes ↓</a>
+      </div>
+    </div>
+
+    <div class="impact-visual">
+      <div class="impact-card">
+        <div class="impact-card-icon">🎓</div>
+        <div>
+          <div class="impact-card-num">480+</div>
+          <div class="impact-card-label">Scholarships Awarded</div>
+          <div class="impact-card-desc">Supporting students across Bauchi State with full school scholarships.</div>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-card-icon">⚽</div>
+        <div>
+          <div class="impact-card-num">1,200+</div>
+          <div class="impact-card-label">Youth Trained</div>
+          <div class="impact-card-desc">Free football academies running in 6 communities across Bauchi.</div>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-card-icon">🏥</div>
+        <div>
+          <div class="impact-card-num">3,000+</div>
+          <div class="impact-card-label">Medical Beneficiaries</div>
+          <div class="impact-card-desc">Free medical outreach programs serving underserved communities.</div>
+        </div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-card-icon">🌍</div>
+        <div>
+          <div class="impact-card-num">6</div>
+          <div class="impact-card-label">LGAs Reached</div>
+          <div class="impact-card-desc">Foundation programs active in six Local Government Areas statewide.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAUSES -->
+<section class="section section-dark" id="causes">
+  <div class="section-center">
+    <div class="section-tag-found">❤️ What We Support</div>
+    <h2 class="section-title-found">Our Causes</h2>
+    <p class="section-desc">Every naira donated goes directly into programs that change real lives in our communities.</p>
+  </div>
+
+  <div class="causes-grid">
+    <div class="cause-card">
+      <span class="cause-icon">🎓</span>
+      <div class="cause-title">Education & Scholarships</div>
+      <p class="cause-desc">Funding school fees, learning materials, and university scholarships for talented but underprivileged students across Bauchi State. Because education should never be a luxury.</p>
+      <div class="cause-progress-label">
+        <span>₦12.4M raised</span>
+        <span>74%</span>
+      </div>
+      <div class="cause-progress-bar">
+        <div class="cause-progress-fill" style="width:74%"></div>
+      </div>
+    </div>
+
+    <div class="cause-card">
+      <span class="cause-icon">⚽</span>
+      <div class="cause-title">Grassroots Football</div>
+      <p class="cause-desc">Running free football academies for youth aged 6–18 in underserved communities. We believe the next Wikki superstar might be in a village without a pitch — we're changing that.</p>
+      <div class="cause-progress-label">
+        <span>₦8.2M raised</span>
+        <span>61%</span>
+      </div>
+      <div class="cause-progress-bar">
+        <div class="cause-progress-fill" style="width:61%"></div>
+      </div>
+    </div>
+
+    <div class="cause-card">
+      <span class="cause-icon">🏥</span>
+      <div class="cause-title">Healthcare Outreach</div>
+      <p class="cause-desc">Free medical camps, eye care, maternal health support, and medicine distribution in rural LGAs where access to healthcare is severely limited. Your health is our priority.</p>
+      <div class="cause-progress-label">
+        <span>₦6.8M raised</span>
+        <span>55%</span>
+      </div>
+      <div class="cause-progress-bar">
+        <div class="cause-progress-fill" style="width:55%"></div>
+      </div>
+    </div>
+
+    <div class="cause-card">
+      <span class="cause-icon">🌱</span>
+      <div class="cause-title">Community Development</div>
+      <p class="cause-desc">Rehabilitating local football pitches, building community centers, clean water projects, and youth empowerment programs that strengthen the social fabric of Bauchi State.</p>
+      <div class="cause-progress-label">
+        <span>₦5.1M raised</span>
+        <span>48%</span>
+      </div>
+      <div class="cause-progress-bar">
+        <div class="cause-progress-fill" style="width:48%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DONATION -->
+<section class="donate-section" id="donate">
+  <div class="donate-inner">
+    <div class="donate-left">
+      <div class="section-tag-found" style="display:inline-block;margin-bottom:12px;">❤️ Your Impact</div>
+      <h2>EVERY NAIRA<br><em style="color:var(--rose);font-style:normal;">COUNTS</em></h2>
+      <p>Your donation directly funds the programs above. No overhead bloat — we are committed to maximum impact from every contribution.</p>
+
+      <div class="what-gives">
+        <div class="what-gives-item">
+          <div class="what-gives-icon">📚</div>
+          <div class="what-gives-text">
+            <strong>₦2,500</strong>
+            <span>Buys one term's textbooks for a student in need.</span>
+          </div>
+        </div>
+        <div class="what-gives-item">
+          <div class="what-gives-icon">⚽</div>
+          <div class="what-gives-text">
+            <strong>₦5,000</strong>
+            <span>Equips one youth player with boots and kit for a season.</span>
+          </div>
+        </div>
+        <div class="what-gives-item">
+          <div class="what-gives-icon">💊</div>
+          <div class="what-gives-text">
+            <strong>₦10,000</strong>
+            <span>Provides medicine for 10 families at our health outreach camps.</span>
+          </div>
+        </div>
+        <div class="what-gives-item">
+          <div class="what-gives-icon">🎓</div>
+          <div class="what-gives-text">
+            <strong>₦50,000+</strong>
+            <span>Funds a full year scholarship for a deserving student.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Donation Form -->
+    <div>
+      <div class="donate-form-wrap" id="donateForm">
+        <div class="donate-form-title">Make A Donation</div>
+        <div class="donate-form-sub">Secure · Transparent · Impactful</div>
+
+        <label class="form-label">Select Frequency</label>
+        <div class="freq-tabs" style="margin-bottom:20px;">
+          <div class="freq-tab active" onclick="setFreq(this,'once')">One Time</div>
+          <div class="freq-tab" onclick="setFreq(this,'monthly')">Monthly</div>
+          <div class="freq-tab" onclick="setFreq(this,'yearly')">Yearly</div>
+        </div>
+
+        <label class="form-label">Choose Amount (₦)</label>
+        <div class="amount-grid">
+          <button class="amount-btn" onclick="setAmount(this,'2500')">₦2,500</button>
+          <button class="amount-btn active" onclick="setAmount(this,'5000')">₦5,000</button>
+          <button class="amount-btn" onclick="setAmount(this,'10000')">₦10,000</button>
+          <button class="amount-btn" onclick="setAmount(this,'25000')">₦25,000</button>
+          <button class="amount-btn" onclick="setAmount(this,'50000')">₦50,000</button>
+          <button class="amount-btn" onclick="setAmount(this,'custom')">Custom</button>
+        </div>
+
+        <div class="amount-custom-wrap" id="customWrap" style="display:none;">
+          <span class="amount-currency">₦</span>
+          <input class="amount-custom-input" type="number" id="customAmount" placeholder="Enter your amount" min="500" />
+        </div>
+
+        <label class="form-label" style="margin-top:8px;">Cause (optional)</label>
+        <select style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:2px;color:white;font-family:'Barlow',sans-serif;font-size:0.9rem;outline:none;margin-bottom:14px;appearance:none;cursor:pointer;" id="causeSelect">
+          <option value="general">General Fund (we decide where it's needed most)</option>
+          <option value="education">🎓 Education & Scholarships</option>
+          <option value="football">⚽ Grassroots Football</option>
+          <option value="health">🏥 Healthcare Outreach</option>
+          <option value="community">🌱 Community Development</option>
+        </select>
+
+        <label class="form-label">Full Name</label>
+        <input class="form-input" type="text" id="donorName" placeholder="Aminu Ibrahim" />
+
+        <label class="form-label">Email Address</label>
+        <input class="form-input" type="email" id="donorEmail" placeholder="you@email.com" />
+
+        <label class="form-label">Phone (optional)</label>
+        <input class="form-input" type="tel" id="donorPhone" placeholder="+234 800 000 0000" style="margin-bottom:20px;" />
+
+        <button class="donate-submit" onclick="submitDonation()">❤️ Donate Now</button>
+        <div class="donate-trust">
+          🔒 Your information is safe &nbsp;·&nbsp; Verified Foundation &nbsp;·&nbsp; Receipt via email
+        </div>
+      </div>
+
+      <div class="donate-success" id="donateSuccess">
+        <div class="success-icon">❤️</div>
+        <div class="success-title">Thank You!</div>
+        <p class="success-msg">Your generous donation has been received. We will send a confirmation and receipt to your email within 24 hours. Together, we're building a better Bauchi. 🙏</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-center">
+    <div class="section-tag-found">❤️ Stories</div>
+    <h2 class="section-title-found">Lives Changed</h2>
+    <p class="section-desc">Real stories from real people whose lives have been touched by the Wikki Tourist Foundation.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">The Foundation paid my WAEC registration and bought all my books. I passed with flying colours and got admission to ABU Zaria. I owe my future to Wikki Tourist FC.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👨‍🎓</div>
+        <div>
+          <div class="testimonial-name">Musa Adamu, 19</div>
+          <div class="testimonial-loc">Dass LGA, Bauchi State</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">My son joined the free football academy in 2024. Today he trains every week with real coaching. He dreams of playing for Wikki one day — and I believe he will.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👩</div>
+        <div>
+          <div class="testimonial-name">Hajiya Fatima Umar</div>
+          <div class="testimonial-loc">Alkaleri LGA, Bauchi State</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-quote">"</div>
+      <p class="testimonial-text">The medical outreach came to our village and screened over 200 people. My mother's eye condition was diagnosed early thanks to their doctors. We are forever grateful.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">👨</div>
+        <div>
+          <div class="testimonial-name">Ibrahim Suleiman</div>
+          <div class="testimonial-loc">Ganjuwa LGA, Bauchi State</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <div class="footer-brand">Wikki Tourist Foundation</div>
+  <span class="footer-copy-found">© 2026 Wikki Tourist FC · All Rights Reserved</span>
+  <a class="footer-back" href="index.html">← Back to Main Site</a>
+</footer>
+
+<script>
+var selectedAmount = '5000';
+var selectedFreq = 'once';
+
+function setAmount(btn, val) {
+  document.querySelectorAll('.amount-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  selectedAmount = val;
+  var customWrap = document.getElementById('customWrap');
+  if (val === 'custom') {
+    customWrap.style.display = 'block';
+    document.getElementById('customAmount').focus();
+  } else {
+    customWrap.style.display = 'none';
+  }
+}
+
+function setFreq(tab, val) {
+  document.querySelectorAll('.freq-tab').forEach(function(t) { t.classList.remove('active'); });
+  tab.classList.add('active');
+  selectedFreq = val;
+}
+
+function submitDonation() {
+  var name = document.getElementById('donorName').value.trim();
+  var email = document.getElementById('donorEmail').value.trim();
+  var amount = selectedAmount === 'custom'
+    ? document.getElementById('customAmount').value
+    : selectedAmount;
+
+  if (!name || !email) {
+    alert('Please enter your name and email to continue.');
+    return;
+  }
+  if (!email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  if (!amount || Number(amount) < 500) {
+    alert('Please select or enter a valid donation amount (minimum ₦500).');
+    return;
+  }
+
+  document.getElementById('donateForm').style.display = 'none';
+  document.getElementById('donateSuccess').classList.add('show');
+  document.getElementById('donate').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Animate progress bars on scroll
+var progressAnimated = false;
+window.addEventListener('scroll', function() {
+  if (progressAnimated) return;
+  var causesEl = document.getElementById('causes');
+  if (causesEl && window.scrollY + window.innerHeight > causesEl.offsetTop + 200) {
+    progressAnimated = true;
+    // bars already set via inline style, animation runs via CSS transition
+  }
+});
+</script>
+</body>
+</html>
